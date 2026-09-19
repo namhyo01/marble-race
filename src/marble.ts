@@ -170,16 +170,19 @@ export class Marble {
     // ctx.shadowColor = this.color;
     // ctx.shadowBlur = zoom / 2;
     if (skin) {
-      transformGuard(ctx, () => {
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
-        // 스킨은 정사각형이라 그대로 그리면 구슬이 네모로 보인다. 투명 배경이
-        // 없는 이미지(jpg 등)도 구슬 모양이 되도록 원으로 잘라낸다.
-        ctx.beginPath();
-        ctx.arc(0, 0, hs, 0, Math.PI * 2);
-        ctx.clip();
-        ctx.drawImage(skin, -hs, -hs, hs * 2, hs * 2);
-      });
+      // transformGuard가 아니라 save/restore를 쓴다. transformGuard는 transform만
+      // 되돌리고 clip은 그대로 두는데, clip은 restore 말고는 해제할 방법이 없다.
+      // 한 번이라도 남으면 이후 모든 그리기가 그 원 안으로 잘려 구슬이 하나만 보인다.
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.angle);
+      // 스킨은 정사각형이라 그대로 그리면 구슬이 네모로 보인다. 투명 배경이
+      // 없는 이미지(jpg 등)도 구슬 모양이 되도록 원으로 잘라낸다.
+      ctx.beginPath();
+      ctx.arc(0, 0, hs, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.drawImage(skin, -hs, -hs, hs * 2, hs * 2);
+      ctx.restore();
     } else {
       this._drawMarbleBody(ctx, false);
     }
