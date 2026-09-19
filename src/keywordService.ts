@@ -1,7 +1,9 @@
 import type { KeywordEntry, KeywordsData } from './types/keyword.type';
 
-const DEFAULT_KEYWORDS_URL = 'https://marblerouletteshop.com/api/external/keywords.json';
-const DEFAULT_SPRITE_BASE_URL = 'https://marblerouletteshop.com/api/external/sprites';
+// 원본은 상점 API에서 키워드 스프라이트를 받아왔다. 이 배포본에는 그 서버가
+// 없으므로 비워 둔다. 빈 값이면 fetchKeywords가 네트워크로 나가지 않는다.
+const DEFAULT_KEYWORDS_URL = '';
+const DEFAULT_SPRITE_BASE_URL = '';
 const REFRESH_INTERVAL = 60000; // 60 seconds
 
 export class KeywordService {
@@ -22,10 +24,11 @@ export class KeywordService {
     return true;
   }
 
-  async init(): Promise<void> {
-    await this.fetchKeywords();
-    this._startPeriodicRefresh();
-  }
+  // 원본은 상점 API에서 키워드 스프라이트를 받아 구슬에 붙였다. 그 API는
+  // 이 배포본에서 쓸 수 없으므로(외부 도메인, 인증 필요) 아무것도 받지 않는다.
+  // _keywordsData가 null로 남으면 getSprite는 undefined를 돌려주고,
+  // 렌더러는 스프라이트 없이 평소대로 그린다.
+  async init(): Promise<void> {}
 
   destroy(): void {
     if (this._intervalId !== null) {
@@ -43,6 +46,7 @@ export class KeywordService {
   }
 
   async fetchKeywords(): Promise<void> {
+    if (!this._keywordsUrl) return;
     try {
       const response = await fetch(this._keywordsUrl);
       if (!response.ok) {

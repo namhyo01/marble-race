@@ -1,7 +1,7 @@
 {
-  "name": "Marble roulette",
-  "short_name": "MR",
-  "id": "lazygyu.marble-roulette",
+  "name": "Marble Race 구슬 추첨기",
+  "short_name": "구슬추첨기",
+  "id": "marble-race",
   "icons": [
     {
       "src": "android-icon-36x36.png",
@@ -40,7 +40,7 @@
       "density": "4.0"
     }
   ],
-  "start_url": "https://lazygyu.github.io/roulette",
+  "start_url": "./",
   "display_override": [
     "fullscreen",
     "minimal-ui"
