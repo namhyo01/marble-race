@@ -173,6 +173,11 @@ export class Marble {
       transformGuard(ctx, () => {
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
+        // 스킨은 정사각형이라 그대로 그리면 구슬이 네모로 보인다. 투명 배경이
+        // 없는 이미지(jpg 등)도 구슬 모양이 되도록 원으로 잘라낸다.
+        ctx.beginPath();
+        ctx.arc(0, 0, hs, 0, Math.PI * 2);
+        ctx.clip();
         ctx.drawImage(skin, -hs, -hs, hs * 2, hs * 2);
       });
     } else {

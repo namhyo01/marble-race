@@ -142,14 +142,40 @@ export class RouletteRenderer {
   }
 
   private async _load(): Promise<void> {
+    // 구슬 이름이 여기 키와 정확히 일치하면 그 이미지를 구슬 스킨으로 쓴다.
+    // 경로는 Parcel이 정적으로 분석하므로 변수로 만들면 번들에 포함되지 않는다.
+    // 반드시 리터럴로 적을 것.
     const loadPromises = [
-      { name: '챔루', imgUrl: new URL('../assets/images/chamru.png', import.meta.url) },
-      { name: '쿠빈', imgUrl: new URL('../assets/images/kubin.png', import.meta.url) },
-      { name: '꽉변', imgUrl: new URL('../assets/images/kkwak.png', import.meta.url) },
-      { name: '꽉변호사', imgUrl: new URL('../assets/images/kkwak.png', import.meta.url) },
-      { name: '꽉 변호사', imgUrl: new URL('../assets/images/kkwak.png', import.meta.url) },
-      { name: '주누피', imgUrl: new URL('../assets/images/junyoop.png', import.meta.url) },
-      { name: '왈도쿤', imgUrl: new URL('../assets/images/waldokun.png', import.meta.url) },
+      { name: 'AAVE', imgUrl: new URL('../assets/images/coins/AAVE.png', import.meta.url) },
+      { name: 'ADA', imgUrl: new URL('../assets/images/coins/ADA.png', import.meta.url) },
+      { name: 'AVAX', imgUrl: new URL('../assets/images/coins/AVAX.png', import.meta.url) },
+      { name: 'BCH', imgUrl: new URL('../assets/images/coins/BCH.png', import.meta.url) },
+      { name: 'BNB', imgUrl: new URL('../assets/images/coins/BNB.png', import.meta.url) },
+      { name: 'BTC', imgUrl: new URL('../assets/images/coins/BTC.png', import.meta.url) },
+      { name: 'DOGE', imgUrl: new URL('../assets/images/coins/DOGE.png', import.meta.url) },
+      { name: 'DOT', imgUrl: new URL('../assets/images/coins/DOT.jpg', import.meta.url) },
+      { name: 'ENA', imgUrl: new URL('../assets/images/coins/ENA.png', import.meta.url) },
+      { name: 'ETC', imgUrl: new URL('../assets/images/coins/ETC.png', import.meta.url) },
+      { name: 'ETH', imgUrl: new URL('../assets/images/coins/ETH.png', import.meta.url) },
+      { name: 'GRAM', imgUrl: new URL('../assets/images/coins/GRAM.png', import.meta.url) },
+      { name: 'HBAR', imgUrl: new URL('../assets/images/coins/HBAR.png', import.meta.url) },
+      { name: 'ICP', imgUrl: new URL('../assets/images/coins/ICP.png', import.meta.url) },
+      { name: 'LINK', imgUrl: new URL('../assets/images/coins/LINK.png', import.meta.url) },
+      { name: 'LTC', imgUrl: new URL('../assets/images/coins/LTC.png', import.meta.url) },
+      { name: 'NEAR', imgUrl: new URL('../assets/images/coins/NEAR.jpg', import.meta.url) },
+      { name: 'ONDO', imgUrl: new URL('../assets/images/coins/ONDO.png', import.meta.url) },
+      { name: 'PAXG', imgUrl: new URL('../assets/images/coins/PAXG.png', import.meta.url) },
+      { name: 'PUMP', imgUrl: new URL('../assets/images/coins/PUMP.jpg', import.meta.url) },
+      { name: 'SKY', imgUrl: new URL('../assets/images/coins/SKY.jpg', import.meta.url) },
+      { name: 'SOL', imgUrl: new URL('../assets/images/coins/SOL.png', import.meta.url) },
+      { name: 'SUI', imgUrl: new URL('../assets/images/coins/SUI.png', import.meta.url) },
+      { name: 'TAO', imgUrl: new URL('../assets/images/coins/TAO.jpeg', import.meta.url) },
+      { name: 'UNI', imgUrl: new URL('../assets/images/coins/UNI.png', import.meta.url) },
+      { name: 'WLD', imgUrl: new URL('../assets/images/coins/WLD.jpeg', import.meta.url) },
+      { name: 'WLFI', imgUrl: new URL('../assets/images/coins/WLFI.png', import.meta.url) },
+      { name: 'XLM', imgUrl: new URL('../assets/images/coins/XLM.jpg', import.meta.url) },
+      { name: 'XRP', imgUrl: new URL('../assets/images/coins/XRP.png', import.meta.url) },
+      { name: 'ZEC', imgUrl: new URL('../assets/images/coins/ZEC.png', import.meta.url) },
     ].map(({ name, imgUrl }) => {
       return (async () => {
         this._images[name] = await this._loadImage(imgUrl.toString());

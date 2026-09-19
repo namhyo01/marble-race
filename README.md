@@ -53,6 +53,28 @@ Cloudflare Pages나 Netlify처럼 루트 경로로 서빙하는 곳에 올린다
   회수하는 kill switch였고, 캐시 삭제 필터가 `images` 같은 전역 이름을 포함해
   같은 origin의 다른 프로젝트 캐시까지 지울 수 있어 제거했습니다.
 
+## 구슬 스킨
+
+기본 이름 목록은 암호화폐 티커 30개이고, 각 구슬에는 해당 코인 로고가 입혀집니다.
+구슬 이름이 `assets/images/coins/`의 파일명(확장자 제외)과 **정확히 일치**하면
+그 이미지를 스킨으로 씁니다. 등록은 `src/rouletteRenderer.ts`의 `_load()`에
+있습니다.
+
+이미지를 추가하려면 파일을 넣고 `_load()`에 한 줄 추가하세요.
+
+```ts
+{ name: 'BTC', imgUrl: new URL('../assets/images/coins/BTC.png', import.meta.url) },
+```
+
+경로는 Parcel이 정적으로 분석하므로 **문자열 리터럴로 써야** 합니다. 변수로
+조립하면 번들에 포함되지 않아 이미지가 깨집니다.
+
+외부 URL을 직접 쓰지 마세요. canvas가 오염(tainted)되어 녹화 기능이 깨집니다.
+반드시 로컬 파일로 두어야 합니다.
+
+로고는 [CoinGecko](https://www.coingecko.com)에서 받았습니다. 각 로고는 해당
+프로젝트의 상표이며, 여기서는 그 코인을 지칭하는 용도로만 씁니다.
+
 ## 라이선스
 
 [MIT](./LICENSE)
