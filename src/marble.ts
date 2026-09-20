@@ -181,6 +181,11 @@ export class Marble {
       ctx.beginPath();
       ctx.arc(0, 0, hs, 0, Math.PI * 2);
       ctx.clip();
+      // 원판 없이 심볼만 있는 로고는 그대로 그리면 뒤 배경이 비친다.
+      // 흰 바탕을 먼저 깔아 막는다. 자체 배경이 있는 로고는 이 위를 덮으므로
+      // 달라지는 것이 없다.
+      ctx.fillStyle = '#fff';
+      ctx.fill();
       ctx.drawImage(skin, -hs, -hs, hs * 2, hs * 2);
       ctx.restore();
     } else {
@@ -203,9 +208,12 @@ export class Marble {
   private _drawName(ctx: CanvasRenderingContext2D, zoom: number) {
     transformGuard(ctx, () => {
       ctx.font = `12pt sans-serif`;
-      ctx.strokeStyle = 'black';
-      ctx.lineWidth = 2;
-      ctx.fillStyle = this.color;
+      // 글자는 검정, 테두리는 흰색. 검정에 검정 테두리를 두르면 뭉개지고,
+      // 배경 이미지가 밝아 검정만으로는 경계가 흐려진다
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = 3;
+      ctx.lineJoin = 'round';
+      ctx.fillStyle = 'black';
       ctx.shadowBlur = 0;
       ctx.translate(this.x, this.y + 0.25);
       ctx.scale(1 / zoom, 1 / zoom);
