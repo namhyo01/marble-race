@@ -9,6 +9,7 @@ import { Minimap } from './minimap';
 import options, { type WinnerRange } from './options';
 import { ParticleManager } from './particleManager';
 import { Box2dPhysics } from './physics-box2d';
+import { ClockRenderer } from './clockRenderer';
 import { RankRenderer } from './rankRenderer';
 import { type AdHit, RouletteRenderer } from './rouletteRenderer';
 import { SkillEffect } from './skillEffect';
@@ -261,6 +262,7 @@ export class Roulette extends EventTarget {
     await this.physics.init();
 
     this.addUiObject(new RankRenderer());
+    this.addUiObject(new ClockRenderer());
     this.attachEvent();
     const minimap = new Minimap();
     minimap.onViewportChange((pos) => {

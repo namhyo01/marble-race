@@ -1,3 +1,4 @@
+import { getClockPanelRect } from './clockRenderer';
 import type { Marble } from './marble';
 import type { WinnerRange } from './options';
 import type { RenderParameters } from './rouletteRenderer';
@@ -74,6 +75,9 @@ export class RankRenderer implements UIObject {
     this.winnerRange = winnerRange;
 
     ctx.save();
+    // 우측 상단은 시계 패널이 쓰므로 그 아래에서 시작한다
+    const clock = getClockPanelRect(width, height);
+    ctx.translate(0, clock.y + clock.h + 6);
     ctx.textAlign = 'right';
     ctx.font = '10pt sans-serif';
     ctx.fillStyle = '#666';
