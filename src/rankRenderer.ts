@@ -75,6 +75,20 @@ export class RankRenderer implements UIObject {
     this.winnerRange = winnerRange;
 
     ctx.save();
+
+    // 배경 이미지가 밝으면 순위 글자가 묻힌다. 목록이 놓이는 오른쪽 끝에만
+    // 테마 배경색을 옅게 깔아 대비를 만든다. 왼쪽으로 갈수록 투명해져
+    // 띠의 경계가 드러나지 않는다.
+    const bandW = 190;
+    const band = ctx.createLinearGradient(width - bandW, 0, width, 0);
+    band.addColorStop(0, 'transparent');
+    band.addColorStop(1, theme.background);
+    ctx.save();
+    ctx.globalAlpha = 0.72;
+    ctx.fillStyle = band;
+    ctx.fillRect(width - bandW, 0, bandW, height);
+    ctx.restore();
+
     // 우측 상단은 시계 패널이 쓰므로 그 아래에서 시작한다
     const clock = getClockPanelRect(width, height);
     ctx.translate(0, clock.y + clock.h + 6);

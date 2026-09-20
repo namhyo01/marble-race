@@ -384,7 +384,7 @@ export class RouletteRenderer {
       const fitScale = Math.min(cw / img.width, ch / img.height);
       const fitW = img.width * fitScale;
       const fitH = img.height * fitScale;
-      cacheCtx.filter = 'blur(6px)';
+      cacheCtx.filter = 'blur(4px)';
       cacheCtx.drawImage(img, (cw - fitW) / 2, (ch - fitH) / 2, fitW, fitH);
       cacheCtx.filter = 'none';
 
@@ -393,14 +393,14 @@ export class RouletteRenderer {
     }
 
     this.ctx.save();
-    this.ctx.globalAlpha = 0.62;
+    this.ctx.globalAlpha = 0.88;
     this.ctx.drawImage(this._backgroundCache, 0, 0);
     this.ctx.restore();
 
     // 막은 테마 배경색으로 덮는다. 다크에서는 어둡게, 라이트에서는 밝게 눌려
     // 어느 쪽에서도 배경이 겉돌지 않는다
     this.ctx.save();
-    this.ctx.globalAlpha = 0.3;
+    this.ctx.globalAlpha = 0.16;
     this.ctx.fillStyle = this._theme.background;
     this.ctx.fillRect(0, 0, cw, ch);
     this.ctx.restore();
