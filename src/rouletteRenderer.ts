@@ -370,26 +370,37 @@ export class RouletteRenderer {
       const cacheCtx = cache.getContext('2d');
       if (!cacheCtx) return;
 
-      // blur는 가장자리를 투명하게 만든다. 조금 크게 그려 여백이 생기지 않게 한다
-      const scale = Math.max(cw / img.width, ch / img.height) * 1.15;
-      const dw = img.width * scale;
-      const dh = img.height * scale;
-      cacheCtx.filter = 'blur(12px)';
-      cacheCtx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+      // 두 겹으로 깐다.
+      // 1) 화면을 꽉 채운(cover) 겹: 세게 흐려 여백 없이 색만 깔아 준다.
+      //    blur는 가장자리를 투명하게 만들므로 조금 크게 그린다.
+      const coverScale = Math.max(cw / img.width, ch / img.height) * 1.2;
+      const coverW = img.width * coverScale;
+      const coverH = img.height * coverScale;
+      cacheCtx.filter = 'blur(28px)';
+      cacheCtx.drawImage(img, (cw - coverW) / 2, (ch - coverH) / 2, coverW, coverH);
+
+      // 2) 이미지 전체가 들어오는(contain) 겹: 원래 그림을 알아볼 수 있게
+      //    약하게만 흐린다. 위 겹이 뒤를 채우므로 여백이 비지 않는다.
+      const fitScale = Math.min(cw / img.width, ch / img.height);
+      const fitW = img.width * fitScale;
+      const fitH = img.height * fitScale;
+      cacheCtx.filter = 'blur(6px)';
+      cacheCtx.drawImage(img, (cw - fitW) / 2, (ch - fitH) / 2, fitW, fitH);
+      cacheCtx.filter = 'none';
 
       this._backgroundCache = cache;
       this._backgroundCacheKey = key;
     }
 
     this.ctx.save();
-    this.ctx.globalAlpha = 0.34;
+    this.ctx.globalAlpha = 0.62;
     this.ctx.drawImage(this._backgroundCache, 0, 0);
     this.ctx.restore();
 
     // 막은 테마 배경색으로 덮는다. 다크에서는 어둡게, 라이트에서는 밝게 눌려
     // 어느 쪽에서도 배경이 겉돌지 않는다
     this.ctx.save();
-    this.ctx.globalAlpha = 0.42;
+    this.ctx.globalAlpha = 0.3;
     this.ctx.fillStyle = this._theme.background;
     this.ctx.fillRect(0, 0, cw, ch);
     this.ctx.restore();
