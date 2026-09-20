@@ -58,6 +58,9 @@ export class RouletteRenderer {
   public sizeFactor = 1;
 
   protected _images: { [key: string]: HTMLImageElement } = {};
+  private _backgroundImage: HTMLImageElement | null = null;
+  private _backgroundCache: HTMLCanvasElement | null = null;
+  private _backgroundCacheKey = '';
   protected _theme: ColorTheme = Themes.dark;
   private _ad: RoundAd | null = null;
   private _adImageCache: Map<string, HTMLImageElement> = new Map();
@@ -188,6 +191,14 @@ export class RouletteRenderer {
       })()
     );
 
+    loadPromises.push(
+      (async () => {
+        this._backgroundImage = await this._loadImage(
+          new URL('../assets/images/coinranger.webp', import.meta.url).toString()
+        );
+      })()
+    );
+
     await Promise.all(loadPromises);
   }
 
@@ -307,6 +318,7 @@ export class RouletteRenderer {
     this._theme = renderParameters.theme;
     this.ctx.fillStyle = this._theme.background;
     this.ctx.fillRect(0, 0, this._sceneCanvas.width, this._sceneCanvas.height);
+    this.renderBackgroundImage();
 
     this.ctx.save();
     this.ctx.scale(initialZoom, initialZoom);
@@ -333,6 +345,54 @@ export class RouletteRenderer {
 
     this._displayCtx.drawImage(this._sceneCanvas, 0, 0, this._canvas.width, this._canvas.height);
     this.renderAdOverlay(renderParameters);
+  }
+
+  /**
+   * 배경 이미지를 화면에 꽉 차게(cover) 깐다. 선명하게 깔면 맵 선과 구슬이
+   * 묻히므로 흐리게 처리해 뒤로 물리고, 위에 어두운 막을 덮어 대비를 만든다.
+   *
+   * blur 필터는 매 프레임 돌리기엔 비싸다. 화면 크기가 바뀔 때만 오프스크린
+   * 캔버스에 한 번 그려 두고, 그 뒤로는 그것만 복사한다.
+   */
+  private renderBackgroundImage(): void {
+    const img = this._backgroundImage;
+    if (!img) return;
+
+    const cw = this._sceneCanvas.width;
+    const ch = this._sceneCanvas.height;
+    if (cw === 0 || ch === 0) return;
+
+    const key = `${cw}x${ch}`;
+    if (!this._backgroundCache || this._backgroundCacheKey !== key) {
+      const cache = document.createElement('canvas');
+      cache.width = cw;
+      cache.height = ch;
+      const cacheCtx = cache.getContext('2d');
+      if (!cacheCtx) return;
+
+      // blur는 가장자리를 투명하게 만든다. 조금 크게 그려 여백이 생기지 않게 한다
+      const scale = Math.max(cw / img.width, ch / img.height) * 1.15;
+      const dw = img.width * scale;
+      const dh = img.height * scale;
+      cacheCtx.filter = 'blur(12px)';
+      cacheCtx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+
+      this._backgroundCache = cache;
+      this._backgroundCacheKey = key;
+    }
+
+    this.ctx.save();
+    this.ctx.globalAlpha = 0.34;
+    this.ctx.drawImage(this._backgroundCache, 0, 0);
+    this.ctx.restore();
+
+    // 막은 테마 배경색으로 덮는다. 다크에서는 어둡게, 라이트에서는 밝게 눌려
+    // 어느 쪽에서도 배경이 겉돌지 않는다
+    this.ctx.save();
+    this.ctx.globalAlpha = 0.42;
+    this.ctx.fillStyle = this._theme.background;
+    this.ctx.fillRect(0, 0, cw, ch);
+    this.ctx.restore();
   }
 
   private renderEntities(entities: MapEntityState[]) {
