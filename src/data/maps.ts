@@ -17,6 +17,225 @@ export type StageDef = {
 
 export const stages: StageDef[] = [
   {
+    title: 'To The Moon',
+    goalY: 130.0,
+    zoomY: 124,
+    entities: [
+      {
+        type: 'static',
+        position: { x: 0, y: 0 },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+        shape: {
+          type: 'polyline',
+          rotation: 0,
+          points: [
+            [9.0, -300],
+            [9.0, 8],
+            [3.0, 14],
+            [3.0, 112],
+            [11.0, 122],
+            [11.0, 132.0],
+          ],
+        },
+      },
+      {
+        type: 'static',
+        position: { x: 0, y: 0 },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+        shape: {
+          type: 'polyline',
+          rotation: 0,
+          points: [
+            [17.0, -300],
+            [17.0, 8],
+            [23.0, 14],
+            [23.0, 112],
+            [15.0, 122],
+            [15.0, 132.0],
+          ],
+        },
+      },
+      {
+        position: { x: 5.0, y: 21.0 },
+        type: 'static',
+        shape: { type: 'box', width: 0.22, height: 2.6, rotation: 6, color: '#26d07c' },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+      },
+      {
+        position: { x: 8.0, y: 24.0 },
+        type: 'static',
+        shape: { type: 'box', width: 0.22, height: 3.4, rotation: -6, color: '#ff4d5e' },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+      },
+      {
+        position: { x: 11.0, y: 20.5 },
+        type: 'static',
+        shape: { type: 'box', width: 0.22, height: 2.2, rotation: 6, color: '#26d07c' },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+      },
+      {
+        position: { x: 14.0, y: 24.5 },
+        type: 'static',
+        shape: { type: 'box', width: 0.22, height: 3.0, rotation: -6, color: '#ff4d5e' },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+      },
+      {
+        position: { x: 17.0, y: 21.5 },
+        type: 'static',
+        shape: { type: 'box', width: 0.22, height: 2.6, rotation: 6, color: '#26d07c' },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+      },
+      {
+        position: { x: 20.0, y: 23.5 },
+        type: 'static',
+        shape: { type: 'box', width: 0.22, height: 3.2, rotation: -6, color: '#ff4d5e' },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+      },
+      {
+        position: { x: 6.5, y: 36.0 },
+        type: 'static',
+        shape: { type: 'box', width: 0.22, height: 3.0, rotation: 6, color: '#ff4d5e' },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+      },
+      {
+        position: { x: 9.5, y: 33.0 },
+        type: 'static',
+        shape: { type: 'box', width: 0.22, height: 2.2, rotation: -6, color: '#26d07c' },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+      },
+      {
+        position: { x: 12.5, y: 36.5 },
+        type: 'static',
+        shape: { type: 'box', width: 0.22, height: 3.2, rotation: 6, color: '#ff4d5e' },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+      },
+      {
+        position: { x: 15.5, y: 33.5 },
+        type: 'static',
+        shape: { type: 'box', width: 0.22, height: 2.4, rotation: -6, color: '#26d07c' },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+      },
+      {
+        position: { x: 18.5, y: 35.5 },
+        type: 'static',
+        shape: { type: 'box', width: 0.22, height: 2.8, rotation: 6, color: '#ff4d5e' },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+      },
+      {
+        type: 'static',
+        position: { x: 0, y: 0 },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+        shape: {
+          type: 'polyline',
+          rotation: 0,
+          color: '#ffc93c',
+          points: [
+            [3.0, 50],
+            [19.0, 56.5],
+          ],
+        },
+      },
+      {
+        type: 'static',
+        position: { x: 0, y: 0 },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+        shape: {
+          type: 'polyline',
+          rotation: 0,
+          color: '#ffc93c',
+          points: [
+            [23.0, 61],
+            [7.0, 67.5],
+          ],
+        },
+      },
+      {
+        type: 'static',
+        position: { x: 0, y: 0 },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+        shape: {
+          type: 'polyline',
+          rotation: 0,
+          color: '#ffc93c',
+          points: [
+            [3.0, 72],
+            [19.0, 78.5],
+          ],
+        },
+      },
+      {
+        type: 'static',
+        position: { x: 0, y: 0 },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+        shape: {
+          type: 'polyline',
+          rotation: 0,
+          color: '#ffc93c',
+          points: [
+            [23.0, 83],
+            [7.0, 89.5],
+          ],
+        },
+      },
+      {
+        type: 'static',
+        position: { x: 0, y: 0 },
+        props: { density: 1, angularVelocity: 0, restitution: 0 },
+        shape: {
+          type: 'polyline',
+          rotation: 0,
+          color: '#ffc93c',
+          points: [
+            [3.0, 94],
+            [18.0, 100.0],
+          ],
+        },
+      },
+      {
+        position: { x: 6.5, y: 106.5 },
+        type: 'kinematic',
+        shape: { type: 'box', width: 1.4, height: 0.12, rotation: 0, color: '#ffc93c' },
+        props: { density: 1, angularVelocity: 3.2, restitution: 0 },
+      },
+      {
+        position: { x: 11.0, y: 106.5 },
+        type: 'kinematic',
+        shape: { type: 'box', width: 1.4, height: 0.12, rotation: 0, color: '#ffc93c' },
+        props: { density: 1, angularVelocity: -3.2, restitution: 0 },
+      },
+      {
+        position: { x: 15.5, y: 106.5 },
+        type: 'kinematic',
+        shape: { type: 'box', width: 1.4, height: 0.12, rotation: 0, color: '#ffc93c' },
+        props: { density: 1, angularVelocity: 3.2, restitution: 0 },
+      },
+      {
+        position: { x: 20.0, y: 106.5 },
+        type: 'kinematic',
+        shape: { type: 'box', width: 1.4, height: 0.12, rotation: 0, color: '#ffc93c' },
+        props: { density: 1, angularVelocity: -3.2, restitution: 0 },
+      },
+      {
+        position: { x: 8.0, y: 116.0 },
+        type: 'static',
+        shape: { type: 'circle', radius: 0.5, color: '#ffc93c' },
+        props: { density: 1, angularVelocity: 0, restitution: 0.4 },
+      },
+      {
+        position: { x: 13.0, y: 114.0 },
+        type: 'static',
+        shape: { type: 'circle', radius: 0.5, color: '#26d07c' },
+        props: { density: 1, angularVelocity: 0, restitution: 0.4 },
+      },
+      {
+        position: { x: 18.0, y: 116.0 },
+        type: 'static',
+        shape: { type: 'circle', radius: 0.5, color: '#ffc93c' },
+        props: { density: 1, angularVelocity: 0, restitution: 0.4 },
+      },
+    ],
+  },
+  {
     title: 'Wheel of fortune',
     goalY: 111,
     zoomY: 106.75,
